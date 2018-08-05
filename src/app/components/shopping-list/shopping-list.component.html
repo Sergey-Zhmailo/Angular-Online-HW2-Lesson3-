@@ -1,0 +1,50 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-6 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <form novalidate (ngSubmit)="onSubmit(form)" #form="ngForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                [(ngModel)]="item.name"
+                [ngClass]="{'is-invalid': itemName.errors && itemName.touched}"
+                #itemName="ngModel"
+                name="name"
+                placeholder="insert item name"
+                required
+                minlength="3"
+                maxlength="10"
+              >
+              <div class="invalid-feedback" [hidden]="!itemName.errors?.required">Please insert Item name.</div>
+              <div class="invalid-feedback" [hidden]="!itemName.errors?.minlength">Name must be at least 3 chars.</div>
+            </div>
+            <div class="form-group">
+              <label for="count">Count</label>
+              <input
+                type="number"
+                id="count"
+                class="form-control"
+                [ngClass]="{'is-invalid': itemCount.errors && itemCount.touched}"
+                [(ngModel)]="item.count"
+                #itemCount="ngModel"
+                name="count"
+                min="1"
+                required
+              >
+              <div class="invalid-feedback" [hidden]="!itemCount.errors?.required">Item count required.</div>
+            </div>
+            <button type="submit" class="btn btn-dark" [disabled]="form.invalid">Add</button>
+          </form>
+        </div>
+      </div>
+      <!--<div class="alert alert-info">Item name: {{ item.name || 'n/a' }}, Item count {{ item.count || 'n/a' }}</div>-->
+    </div>
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item" *ngFor="let item of shoppingList">{{ item.name }}</li>
+  </ul>
+</div>

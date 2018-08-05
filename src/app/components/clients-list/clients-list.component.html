@@ -1,0 +1,141 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="mb-3 col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add client info (* required fields)</h5>
+          <form novalidate (ngSubmit)="onSubmit(addClientForm)" #addClientForm="ngForm">
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="name">Name *</label>
+                    <input
+                      type="text"
+                      id="name"
+                      class="form-control"
+                      [(ngModel)]="client.name"
+                      [ngClass]="{'is-invalid': clientName.errors && clientName.touched, 'is-valid': !clientName.errors && clientName.touched}"
+                      #clientName="ngModel"
+                      name="name"
+                      placeholder="insert client name"
+                      required
+                      minlength="3"
+                    >
+                    <div class="invalid-feedback" [hidden]="!clientName.errors?.required">Please insert Client name.</div>
+                    <div class="invalid-feedback" [hidden]="!clientName.errors?.minlength">Name must be at least 3 chars.</div>
+                  </div>
+                  <div class="form-group col">
+                    <label for="email">E-mail *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="form-control"
+                      [ngClass]="{'is-invalid': !clientEmail.valid && clientEmail.touched, 'is-valid': clientEmail.valid && clientEmail.touched}"
+                      [(ngModel)]="client.email"
+                      #clientEmail="ngModel"
+                      name="email"
+                      placeholder="insert Email"
+                      pattern="[a-zA-Z_.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"
+                      required
+                    >
+                    <div class="invalid-feedback" [hidden]="clientEmail.valid">Incorrect Email!</div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-4">
+                    <label for="name">Age *</label>
+                    <input
+                      type="number"
+                      id="age"
+                      class="form-control"
+                      [(ngModel)]="client.age"
+                      [ngClass]="{'is-invalid': clientAge.errors && clientAge.touched, 'is-valid': !clientAge.errors && clientAge.touched}"
+                      #clientAge="ngModel"
+                      name="age"
+                      placeholder="insert age"
+                      required
+                      minlength="1"
+                    >
+                    <div class="invalid-feedback" [hidden]="!clientAge.errors?.required">Please insert Client age.</div>
+                    <div class="invalid-feedback" [hidden]="!clientAge.errors?.minlength">Age must be at least 1 char.</div>
+                  </div>
+                  <div class="form-group col">
+                    <label for="name">Mobile *</label>
+                    <input
+                      type="text"
+                      id="mobile"
+                      class="form-control"
+                      [(ngModel)]="client.telNumber"
+                      [ngClass]="{'is-invalid': !clientMobile.valid && clientMobile.touched, 'is-valid': clientMobile.valid && clientMobile.touched}"
+                      #clientMobile="ngModel"
+                      name="mobile"
+                      placeholder="insert client tel number"
+                      required
+                      pattern="[+0-9]{10,13}"
+                      minlength="10"
+                    >
+                    <div class="invalid-feedback" [hidden]="!clientMobile.errors?.required">Please insert Client tel number.</div>
+                    <div class="invalid-feedback" [hidden]="clientMobile.valid">Tel number must be +380999999999.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group col">
+                  <label for="name">Comments*</label>
+                  <textarea
+                    class="form-control"
+                    id="comments"
+                    [(ngModel)]="client.comments"
+                    [ngClass]="{'is-invalid': !clientComment.valid && clientComment.touched, 'is-valid': clientComment.valid && clientComment.touched}"
+                    #clientComment="ngModel"
+                    name="comments"
+                    placeholder="insert your comment"
+                    required
+                    rows="3"
+                    minlength="10"
+                  ></textarea>
+                  <div class="invalid-feedback" [hidden]="clientComment.valid">Please insert comment text (min 10 chars).</div>
+                </div>
+                <div class="col">
+                  <button
+                    type="submit" class="btn btn-dark btn-block" [disabled]="addClientForm.invalid">Add</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!--<div class="alert alert-info">Item name: {{ client.email || 'n/a' }}, Item count {{ client.id || 'n/a' }}</div>-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="clientsListResults col-md-12">
+      <h5>Clients</h5>
+      <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col-2">Name</th>
+          <th scope="col-2">Email</th>
+          <th scope="col">Age</th>
+          <th scope="col-2">Mobile</th>
+          <th scope="col-3">Comments</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let client of clientsList, let i = index">
+          <th scope="row">{{ client.id }}</th>
+          <td>{{ client.name }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.age }}</td>
+          <td>{{ client.telNumber }}</td>
+          <td>{{ client.comments }}</td>
+          <td><button class="btn btn-dark float-right" (click)="deleteClient(i)"><i class="fa fa-times"></i></button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
